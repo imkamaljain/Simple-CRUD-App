@@ -1,4 +1,4 @@
-var con = require('../config/dbConfig');
+const pool = require('../config/dbConfig')();
 
 class Employee {
     constructor(employee) {
@@ -11,50 +11,65 @@ class Employee {
         }
     }
     create(newEmp, result) {
-        con.query("INSERT INTO employees set ?", newEmp, function (err, res) {
-            if (err) {
-                result(err, null);
-            } else {
-                result(null, res.insertId);
-            }
+        var con = pool.getConnection((err, con) => {
+            con.query("INSERT INTO employees set ?", newEmp, (err, res) => {
+                if (err) {
+                    result(err, null);
+                } else {
+                    result(null, res.insertId);
+                }
+                con.release();
+            });
         });
     }
     getEmployeeById(id, result) {
-        con.query("Select * from employees where id = ? ", id, function (err, res) {
-            if (err) {
-                result(err, null);
-            } else {
-                result(null, res);
-            }
+        var con = pool.getConnection((err, con) => {
+            con.query("Select * from employees where id = ? ", id, (err, res) => {
+                if (err) {
+                    result(err, null);
+                } else {
+                    result(null, res);
+                }
+                con.release();
+            });
         });
     };
     getAllEmployees(result) {
-        con.query("Select * from employees", function (err, res) {
-            if (err) {
-                result(null, err);
-            } else {
-                result(null, res);
-            }
+        var con = pool.getConnection((err, con) => {
+            con.query("Select * from employees", (err, res) => {
+                if (err) {
+                    result(null, err);
+                } else {
+                    result(null, res);
+                }
+                con.release();
+            });
         });
     };
     update(id, employee, result) {
-        con.query("UPDATE employees SET name=?,email=?,phone=?,designation=?,salary=? WHERE id = ?", [employee.name, employee.email, employee.phone, employee.designation, employee.salary, id], function (err, res) {
-            if (err) {
-                result(null, err);
-            } else {
-                result(null, res);
-            }
+        var con = pool.getConnection((err, con) => {
+            con.query("UPDATE employees SET name=?,email=?,phone=?,designation=?,salary=? WHERE id = ?", [employee.name, employee.email, employee.phone, employee.designation, employee.salary, id], (err, res) => {
+                if (err) {
+                    result(null, err);
+                } else {
+                    result(null, res);
+                }
+                con.release();
+            });
         });
     };
     delete(id, result) {
-        con.query("DELETE FROM employees WHERE id = ?", [id], function (err, res) {
-            if (err) {
-                result(null, err);
-            } else {
-                result(null, res);
-            }
+        var con = pool.getConnection((err, con) => {
+            con.query("DELETE FROM employees WHERE id = ?", [id], (err, res) => {
+                if (err) {
+                    result(null, err);
+                } else {
+                    result(null, res);
+                }
+                con.release();
+            });
         });
-    };
+    }
 }
 
 module.exports = Employee;
