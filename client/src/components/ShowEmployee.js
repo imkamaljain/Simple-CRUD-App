@@ -12,7 +12,7 @@ export default function ShowEmployee() {
   }, []);
   const loadEmployee = async () => {
     const res = await axios.get(`${ENDPOINT}/employees/${id}`);
-    setEmployee(res.data[0]);
+    setEmployee(Array.isArray(res.data) ? res.data[0] : res.data);
   };
 
   return (

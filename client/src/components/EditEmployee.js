@@ -30,8 +30,8 @@ export default function EditEmployee() {
   };
 
   const loadEmployee = async () => {
-    const result = await axios.get(`${ENDPOINT}/employees/${id}`);
-    setEmployee(result.data[0]);
+    const res = await axios.get(`${ENDPOINT}/employees/${id}`);
+    setEmployee(Array.isArray(res.data) ? res.data[0] : res.data);
   };
   return (
     <div className="container">

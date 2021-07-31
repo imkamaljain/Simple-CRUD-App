@@ -24,8 +24,8 @@ export default function Home() {
     <div className="container">
       <div className="py-4">
         <h2 className="text-center">Employees Data</h2>
-        <table class="table border shadow">
-          <thead class="thead-dark">
+        <table className="table border shadow">
+          <thead className="thead-dark">
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Name</th>
@@ -46,13 +46,13 @@ export default function Home() {
                 <td>{employee.email}</td>
                 <td>{employee.phone}</td>
                 <td>
-                  <Link class="btn btn-primary me-3" to={`/employees/${employee.id}`}>
+                  <Link className="btn btn-primary me-3" to={`/employees/${employee.id}`}>
                     View
                   </Link>
-                  <Link class="btn btn-outline-primary me-3" to={`/employees/edit/${employee.id}`}>
+                  <Link className="btn btn-outline-primary me-3" to={`/employees/edit/${employee.id}`}>
                     Edit
                   </Link>
-                  <Link class="btn btn-danger" onClick={() => deleteEmployee(employee.id)}>
+                  <Link className="btn btn-danger" onClick={() => deleteEmployee(employee.id)}>
                     Delete
                   </Link>
                 </td>

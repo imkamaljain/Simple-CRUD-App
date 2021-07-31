@@ -16,7 +16,21 @@ module.exports = (req, res) => {
             res.json({ "code": 100, "status": "Error while connecting database" });
             return;
         }
-        connection.on('error', (err) => {
+        const useDBQuery = `USE ${process.env.DB}`;
+        connection.query(useDBQuery, (err, res) => {
+            const createTableQuery = `CREATE table if not exists employees(
+                id int primary key auto_increment,
+                name varchar(255) not null,
+                email varchar(255),
+                phone varchar(255),
+                designation varchar(255) not null,
+                salary varchar(255) not null
+            )`;
+            connection.query(createTableQuery, function (err) {
+                if (err) console.log(err.message);
+            });
+        });
+        connection.on('error', (err, res) => {
             res.json({ "code": 100, "status": "Error while connection database" });
             return;
         });
